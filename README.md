@@ -61,4 +61,12 @@ curl 'https://dietyodbrokula.pl/customer/diets/rate/' \
 
 ## Jak jak się zautoryzować?
 
-Do autoryzacji używany jest cookie header z podanym id sesji np: `cookie: PHPSESSID=xyz`
+Do autoryzacji używany jest cookie header z podanym id sesji np: `cookie: PHPSESSID=xyz`. Można go pobrać z nagłówka `set-cookie` z odpowiedzi na request:
+
+```
+curl 'https://dietyodbrokula.pl/customer/account/loginPost/referer/aHR0cHM6Ly9kaWV0eW9kYnJva3VsYS5wbC9jdXN0b21lci9hY2NvdW50L2luZGV4Lw%2C%2C/' \
+  -H 'content-type: application/x-www-form-urlencoded' \
+  -H 'cookie: PHPSESSID=qca4fjt2l9vseririo9u285728;' \
+  --data-raw 'form_key=JBYogUnAlARmu2nW&login%5Busername%5D=${encoded_value}&login%5Bpassword%5D=${encoded_$value}' \
+  --compressed -v
+```  
