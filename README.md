@@ -6,7 +6,7 @@ Wszystkie dane zalogowanego użytkownika, które są sewowane przez backend moż
 ```
 curl 'https://dietyodbrokula.pl/customer/section/load' \
                  -H 'accept: application/json' \
-                 -H 'cookie: PHPSESSID=ij0ponjmqtkjqplqeudvs7abp2' \
+                 -H 'cookie: PHPSESSID=xyz' \
                  -H 'x-requested-with: XMLHttpRequest' \
                  --compressed
 ```
@@ -27,7 +27,7 @@ Aby zgłosić opinie potrzebujesz wysłać przykładowy request.
 ```
 curl 'https://dietyodbrokula.pl/rest/V1/customer/menu-diet/save-opinion' \
                      -H 'content-type: application/json' \
-                     -H 'cookie: PHPSESSID=ij0ponjmqtkjqplqeudvs7abp2' \
+                     -H 'cookie: PHPSESSID=xyz' \
                      -H 'x-requested-with: XMLHttpRequest' \
                      --data-raw '{"opinion":{"menu_id":32582,"date":"2022-05-02","stars":4,"note":"Wszystko w porządku.","product_id":277,"meal_time_id":3,"order_item_id":1553929}}' \
                      --compressed
@@ -54,11 +54,11 @@ Można pobrać HTML i sparsować go np: z użyciem Jsoup:
 ```
 curl 'https://dietyodbrokula.pl/customer/diets/rate/' \
                                 -H 'accept: application/json' \
-                                -H 'cookie: PHPSESSID=ij0ponjmqtkjqplqeudvs7abp2' \
+                                -H 'cookie: PHPSESSID=xyz' \
                                 -H 'x-requested-with: XMLHttpRequest' \
                                 --compressed
 ```
 
 ## Jak jak się zautoryzować?
 
-Do autoryzacji używany jest cookie header z podanym id sesji np: `cookie: PHPSESSID=ju0n4mh0q8hmrgb43bdccemfm6`
+Do autoryzacji używany jest cookie header z podanym id sesji np: `cookie: PHPSESSID=xyz`
