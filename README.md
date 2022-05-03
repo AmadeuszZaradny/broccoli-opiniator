@@ -11,16 +11,6 @@ curl 'https://dietyodbrokula.pl/customer/section/load' \
                  --compressed
 ```
 
-**Do rozkminy**: Możliwe, że w polu `review` znajdują się jakieś informacje, które mogą być dla mnie przydatne, ale z jakeigoś powodu jest to puste. Może dlatego, że zużyłem już wszystkie opinie na dzisiaj.
-```
-"review":{
-    "nickname":"",
-    "title":"",
-    "detail":"",
-    "data_id":1651494870
-  },
-```
-
 ## Zgłoszenie opini
 
 Aby zgłosić opinie potrzebujesz wysłać przykładowy request. 
