@@ -29,6 +29,7 @@ class BroccoliOpinionsFacadeImpl(
         println("User data before opinions: " + client.getUserData(session))
 
         val dietsToRate = client.getDietsToRateFormHtml(session).getDietsToRateFromRateDietFromHtml()
+        println("Diets to rate: $dietsToRate")
 
         dietsToRate.forEach { dietToRate: DietToRate? -> client.rateDiet(session, dietToRate!!, stars, message) }
         println("User data after opinions: " + client.getUserData(session))
