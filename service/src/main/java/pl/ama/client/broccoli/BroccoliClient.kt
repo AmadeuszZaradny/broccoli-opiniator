@@ -21,7 +21,7 @@ class BroccoliClient(
             .sessionCookie("ehlcqbq3id6hiqs7eigqtaqffu") // I have to download session id on the start
             .post(RequestBody.create(
                 FORM,
-                Base64.getEncoder().encodeToString("form_key=JBYogUnAlARmu2nW&login[username]=$email&login[password]=$password".toByteArray())
+                Base64.getEncoder().encodeToString("form_key=JBYogUnAlARmu2nW&login[username]=$email&login[password]=$password".toByteArray()) // you should download form id
             ))
             .build()
 
