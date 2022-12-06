@@ -1,12 +1,9 @@
 package pl.ama.client.broccoli
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.squareup.okhttp.MediaType
-import com.squareup.okhttp.OkHttpClient
-import com.squareup.okhttp.Request
-import com.squareup.okhttp.RequestBody
-import com.squareup.okhttp.Response
-import java.util.*
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 
 class BroccoliClient(
     private val okHttpClient: OkHttpClient,
@@ -19,10 +16,13 @@ class BroccoliClient(
             .url(domainUrl + AUTHORIZE_PATH)
             .defaultHeaders()
             .sessionCookie("ehlcqbq3id6hiqs7eigqtaqffu") // I have to download session id on the start
-            .post(RequestBody.create(
-                FORM,
-                Base64.getEncoder().encodeToString("form_key=JBYogUnAlARmu2nW&login[username]=$email&login[password]=$password".toByteArray()) // you should download form id
-            ))
+            .post(
+                FormBody.Builder()
+                    .add("login[username]", email)
+                    .add("login[password]", password)
+                    .add("form_key", "JBYogUnAlARmu2nW") // you should download form id
+                    .build()
+            )
             .build()
 
         return BroccoliSession(
@@ -51,7 +51,7 @@ class BroccoliClient(
 
         return okHttpClient.newCall(request)
             .execute()
-            .body()
+            .body!!
             .string()
     }
 
@@ -63,7 +63,7 @@ class BroccoliClient(
             .header("content-type", "application/json")
             .defaultHeaders()
             .sessionCookie(session.sessionId)
-            .post(RequestBody.create(JSON, bodyJson))
+            .post(bodyJson.toRequestBody(JSON))
             .build()
 
         okHttpClient.newCall(request).execute()
@@ -87,15 +87,15 @@ class BroccoliClient(
         )
 
     private fun <T> Response.toObject(responseType: Class<T>) = objectMapper
-        .readValue(this.body().string(), responseType)
+        .readValue(this.body!!.string(), responseType)
 
     private fun Response.getSessionId() =
-        this.headers()
+        this.headers
             .values("Set-Cookie")[0]
             .split(";")
             .find { string -> string.contains(SESSION_FIELD_NAME) }
             ?.split("=")
-            ?.last() ?: throw CouldNotFindSessionIdException(this.body())
+            ?.last() ?: throw CouldNotFindSessionIdException(this.body!!)
 
     companion object {
         private const val AUTHORIZE_PATH = "/customer/account/loginPost/referer/aHR0cHM6Ly9kaWV0eW9kYnJva3VsYS5wbC9jdXN0b21lci9hY2NvdW50L2luZGV4Lw%2C%2C/"
@@ -103,7 +103,6 @@ class BroccoliClient(
         private const val DIETS_TO_RATE_PATH = "/customer/diets/rate/"
         private const val RATE_DIET_PATH = "/rest/V1/customer/menu-diet/save-opinion"
         private const val SESSION_FIELD_NAME = "PHPSESSID"
-        private val JSON: MediaType = MediaType.parse("application/json; charset=utf-8")
-        private val FORM: MediaType = MediaType.parse("application/x-www-form-urlencoded")
+        private val JSON: MediaType = "application/json; charset=utf-8".toMediaType()
     }
 }

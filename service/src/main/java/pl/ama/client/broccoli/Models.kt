@@ -29,9 +29,9 @@ data class RateDietRequest(
 }
 
 data class UserData(
-    @JsonProperty("customer") val customer: Customer,
+//    @JsonProperty("customer") val customer: Customer,
     @JsonProperty("rewards") val rewards: Rewards
 ) {
-    data class Customer(@JsonProperty("fullname") val fullname: String)
+//    data class Customer(@JsonProperty("fullname") val fullname: String)
     data class Rewards(@JsonProperty("amount") val amount: String)
 }

@@ -1,7 +1,7 @@
 package pl.ama.domain
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.squareup.okhttp.OkHttpClient
+import okhttp3.OkHttpClient
 import org.jsoup.select.Elements
 import pl.ama.client.broccoli.BroccoliClient
 import pl.ama.client.broccoli.DietToRate
