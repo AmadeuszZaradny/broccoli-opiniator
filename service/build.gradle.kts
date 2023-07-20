@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("java")
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "1.7.21"
+    application
 }
 
 group = "pl.ama"
@@ -13,22 +13,26 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.2.2")
-    implementation("org.jsoup:jsoup:1.14.3")
-    implementation("com.squareup.okhttp:okhttp:2.7.5")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.14.0")
+    implementation("org.jsoup:jsoup:1.15.3")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation(kotlin("stdlib-jdk8"))
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
 }
 
-tasks.getByName<Test>("test") {
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "17"
+    }
+}
+
+tasks.withType<Test> {
     useJUnitPlatform()
 }
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    jvmTarget = "1.8"
-}
-val compileTestKotlin: KotlinCompile by tasks
-compileTestKotlin.kotlinOptions {
-    jvmTarget = "1.8"
+
+application {
+    mainClass.set("pl.ama.BroccoliOpinioner")
 }

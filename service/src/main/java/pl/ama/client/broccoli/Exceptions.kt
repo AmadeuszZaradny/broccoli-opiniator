@@ -1,6 +1,6 @@
 package pl.ama.client.broccoli
 
-import com.squareup.okhttp.ResponseBody
+import okhttp3.ResponseBody
 
 class CouldNotFindSessionIdException(response: ResponseBody):
     RuntimeException("Could not find session id in broccoli response: $response")

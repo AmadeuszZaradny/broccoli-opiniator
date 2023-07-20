@@ -2,7 +2,7 @@ package pl.ama
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.squareup.okhttp.OkHttpClient
+import okhttp3.OkHttpClient
 import pl.ama.domain.BroccoliConfig
 import pl.ama.domain.BroccoliOpinionsFacade
 import pl.ama.domain.BroccoliOpinionsFacadeImpl
@@ -24,6 +24,9 @@ object BroccoliOpinioner {
             )
         )
 
-        broccoliOpinionsFacade.rateAllDiets(args[0], args[1], 4, "Wszystko w porządku :)")
+        val email = args.getOrElse(0) { System.getenv("BROCCOLI_EMAIL") }
+        val password = args.getOrElse(1) { System.getenv("BROCCOLI_PASSWORD") }
+
+        broccoliOpinionsFacade.rateAllDiets(email, password, 4, "Wszystko w porządku :)")
     }
 }
